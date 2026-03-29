@@ -1,6 +1,6 @@
 import uuid
 import mysql.connector
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import os
 import subprocess
 import configparser
@@ -204,6 +204,20 @@ def upload():
 
     # For intermediate uploads, keep a simple success message.
     return jsonify({'message': 'Image uploaded successfully', 'Started Reconstruction 3D': False})
+
+@app.route('/download_model', methods=['GET'])
+def download_model():
+    uid = request.args.get('uid', '').strip()
+    if not uid:
+        return jsonify({'error': 'Missing parameter: uid'}), 400
+
+    base_dir = os.path.join(os.getcwd(), 'colmap')
+    ply_path = os.path.join(base_dir, uid, 'fused.ply')
+
+    if not os.path.isfile(ply_path):
+        return jsonify({'error': f'PLY file not found for uid: {uid}'}), 404
+
+    return send_file(ply_path, mimetype='application/x-ply', as_attachment=True, download_name='fused.ply')
 
 if __name__ == '__main__':
     #app.run(debug=True)

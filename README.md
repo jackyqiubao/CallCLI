@@ -183,6 +183,24 @@ Responses:
 	}
 	```
 
+### 4) `/download_model` (GET)
+
+Download the reconstructed 3D model (PLY format) for a given artifact.
+
+Query parameters:
+
+- `uid`: the `ArtifactID` whose model to download.
+
+The server looks for `colmap/<uid>/fused.ply` and returns it as a file download. Returns a 404 JSON error if the file is not found.
+
+#### cURL example
+
+```bash
+curl -OJ "http://localhost:5000/download_model?uid=7b4b2b5e-6c5a-4f69-8b40-0a5c2b6f41f1"
+```
+
+Response: the `fused.ply` file is returned as an attachment download.
+
 ## Batch 3D Model Generation
 
 3D reconstruction is handled by an offline batch script rather than inside the upload API.
