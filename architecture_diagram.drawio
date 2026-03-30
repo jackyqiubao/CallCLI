@@ -1,20 +1,20 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram id="arch" name="3D Artifact Service Architecture">
-    <mxGraphModel dx="1260" dy="1085" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+    <mxGraphModel dx="1254" dy="944" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="grp_client" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;fontStyle=1;fontSize=14;spacingTop=5;container=1;collapsible=0;" value="Client" vertex="1">
-          <mxGeometry height="350" width="200" x="20" y="200" as="geometry" />
+          <mxGeometry height="490" width="200" x="30" y="90" as="geometry" />
         </mxCell>
-        <mxCell id="ui" parent="grp_client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Web / Desktop Client" vertex="1">
-          <mxGeometry height="87.5" width="150" x="25" y="70" as="geometry" />
+        <mxCell id="ui" parent="grp_client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Web / Ancient Vision Scanner Client" vertex="1">
+          <mxGeometry height="96.55882352941177" width="150" x="25" y="140.51470588235296" as="geometry" />
         </mxCell>
         <mxCell id="cl" parent="grp_client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="IOS / Andriod App Cient" vertex="1">
-          <mxGeometry height="87.5" width="150" x="25" y="210" as="geometry" />
+          <mxGeometry height="66.29411764705883" width="150" x="25" y="294" as="geometry" />
         </mxCell>
         <mxCell id="grp_flask" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;fontStyle=1;fontSize=14;spacingTop=5;container=1;collapsible=0;" value="Flask API  (app.py)" vertex="1">
-          <mxGeometry height="350" width="220" x="340" y="120" as="geometry" />
+          <mxGeometry height="460" width="220" x="340" y="120" as="geometry" />
         </mxCell>
         <mxCell id="add" parent="grp_flask" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="POST&#xa;/add_artifact" vertex="1">
           <mxGeometry height="50" width="150" x="35" y="45" as="geometry" />
@@ -25,6 +25,9 @@
         <mxCell id="qa" parent="grp_flask" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="POST&#xa;/query_artifacts" vertex="1">
           <mxGeometry height="50" width="150" x="35" y="250" as="geometry" />
         </mxCell>
+        <mxCell id="dl" parent="grp_flask" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="GET&#xa;/download_model" vertex="1">
+          <mxGeometry height="50" width="150" x="35" y="355" as="geometry" />
+        </mxCell>
         <mxCell id="grp_db" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;verticalAlign=top;fontStyle=1;fontSize=14;spacingTop=5;container=1;collapsible=0;" value="MySQL Database" vertex="1">
           <mxGeometry height="120" width="220" x="680" y="200" as="geometry" />
         </mxCell>
@@ -32,7 +35,7 @@
           <mxGeometry height="65" width="130" x="45" y="35" as="geometry" />
         </mxCell>
         <mxCell id="grp_fs" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;verticalAlign=top;fontStyle=1;fontSize=13;spacingTop=5;container=1;collapsible=0;" value="Filesystem (per ArtifactID)" vertex="1">
-          <mxGeometry height="200" width="220" x="680" y="400" as="geometry" />
+          <mxGeometry height="250" width="220" x="680" y="400" as="geometry" />
         </mxCell>
         <mxCell id="pics" parent="grp_fs" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="pics/  (images)" vertex="1">
           <mxGeometry height="35" width="150" x="35" y="40" as="geometry" />
@@ -42,6 +45,9 @@
         </mxCell>
         <mxCell id="logf" parent="grp_fs" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="colmap_log.txt" vertex="1">
           <mxGeometry height="35" width="150" x="35" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="fusedply" parent="grp_fs" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="fused.ply  (3D model)" vertex="1">
+          <mxGeometry height="35" width="150" x="35" y="190" as="geometry" />
         </mxCell>
         <mxCell id="grp_batch" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;verticalAlign=top;fontStyle=1;fontSize=14;spacingTop=5;container=1;collapsible=0;" value="Batch Job" vertex="1">
           <mxGeometry height="200" width="230" x="1020" y="200" as="geometry" />
@@ -100,6 +106,18 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e13" edge="1" parent="1" source="colmap" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#990000;fontColor=#990000;fontSize=10;" target="logf" value="writes log">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="ui" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#6600CC;fontColor=#6600CC;fontSize=10;" target="dl" value="GET uid">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14b" edge="1" parent="1" source="cl" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#6600CC;fontColor=#6600CC;fontSize=10;" target="dl" value="GET uid">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="dl" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#6600CC;fontColor=#6600CC;fontSize=10;" target="fusedply" value="return fused.ply">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="colmap" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#990000;fontColor=#990000;fontSize=10;" target="fusedply" value="writes ply">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
