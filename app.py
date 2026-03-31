@@ -211,8 +211,8 @@ def download_model():
     if not uid:
         return jsonify({'error': 'Missing parameter: uid'}), 400
 
-    base_dir = os.path.join(os.getcwd(), 'colmap')
-    ply_path = os.path.join(base_dir, uid, 'fused.ply')
+    base_dir = os.path.join(os.getcwd(), 'colmap',uid, 'dense','0')  
+    ply_path = os.path.join(base_dir, 'fused.ply')
 
     if not os.path.isfile(ply_path):
         return jsonify({'error': f'PLY file not found for uid: {uid}'}), 404
