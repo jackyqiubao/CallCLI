@@ -29,7 +29,7 @@ def download_file(url, local_filename):
         return e
 
 
-def photogrammetryoperation(scanname=uuid.uuid4(), scannerip='192.168.12.1'):
+def photogrammetryoperation(scanname=uuid.uuid4(), scannerip='192.168.12.1', scan=False):
     os.chdir(os.path.dirname(__file__))
 
     try:
@@ -40,17 +40,18 @@ def photogrammetryoperation(scanname=uuid.uuid4(), scannerip='192.168.12.1'):
     for file in glob.glob('.photogrammetrycache/output*'):
         os.remove(file)
 
-    for file in glob.glob('.photogrammetrycache/processing*'):
-        os.remove(file)
+	if scan == True:
+	    for file in glob.glob('.photogrammetrycache/processing*'):
+	        os.remove(file)
 
     file_path = Path(".photogrammetrycache/processor")
     if file_path.is_file():
         print("File exists")
     else:
         download_file('https://github.com/artifact-alliance/fll/raw/refs/heads/main/install/processor', '.photogrammetrycache/processor')
-
-    for i in range(160):
-        download_file(f'http://{scanner_ip}:1234/images/captured_img{i}.png', f'.photogrammetrycache/processing{i}.png')
+	if scan == True:
+	    for i in range(160):
+	        download_file(f'http://{scanner_ip}:1234/images/captured_img{i}.png', f'.photogrammetrycache/processing{i}.png')
 
     os.system(f'.photogrammetrycache/processor .photogrammetrycache/ {scan_name}.usdz -d raw')
 
