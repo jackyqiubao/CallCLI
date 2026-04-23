@@ -90,7 +90,7 @@ def query_artifacts():
     print(sqlwhere)
 
     picture_file = request.files.get('picture')
-
+    print('before query')
     # Build and execute query (caller is responsible for safe sqlwhere usage)
     try:
         conn = get_db_connection()
@@ -101,6 +101,7 @@ def query_artifacts():
         cursor.close()
         conn.close()
     except Exception as e:
+        print(str(e))
         return jsonify({'error': f'Failed to query artifacts: {str(e)}'}), 500
 
     # If no picture is provided, just return the list of artifacts
