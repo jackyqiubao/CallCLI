@@ -1,22 +1,22 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "aspose-3d==26.2.0",
-#     "blinker==1.9.0",
-#     "certifi==2026.4.22",
-#     "charset-normalizer==3.4.7",
-#     "click==8.3.3",
-#     "colorama==0.4.6",
-#     "flask==2.3.3",
-#     "flask-cors==4.0.0",
-#     "idna==3.13",
-#     "itsdangerous==2.2.0",
-#     "jinja2==3.1.6",
-#     "markupsafe==3.0.3",
-#     "mysql-connector-python==8.3.0",
-#     "requests==2.31.0",
-#     "urllib3==2.6.3",
-#     "werkzeug==2.3.7",
+#     "aspose-3d>=26.2.0",
+#     "blinker>=1.9.0",
+#     "certifi>=2026.4.22",
+#     "charset-normalizer>=3.4.7",
+#     "click>=8.3.3",
+#     "colorama>=0.4.6",
+#     "flask>=2.3.3",
+#     "flask-cors>=4.0.0",
+#     "idna>=3.13",
+#     "itsdangerous>=2.2.0",
+#     "jinja2>=3.1.6",
+#     "markupsafe>=3.0.3",
+#     "mysql-connector-python>=8.3.0",
+#     "requests>=2.31.0",
+#     "urllib3>=2.6.3",
+#     "werkzeug>=2.3.7",
 # ]
 # ///
 import uuid
