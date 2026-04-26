@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "aspose-3d>=26.2.0",
+#     "aspose-3d",
 #     "blinker>=1.9.0",
 #     "certifi>=2026.4.22",
 #     "charset-normalizer>=3.4.7",
