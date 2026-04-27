@@ -1,7 +1,30 @@
-import requests, os, time, glob, uuid
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "aspose-3d",
+#     "blinker>=1.9.0",
+#     "certifi>=2026.4.22",
+#     "charset-normalizer>=3.4.7",
+#     "click>=8.3.3",
+#     "colorama>=0.4.6",
+#     "flask>=2.3.3",
+#     "flask-cors>=4.0.0",
+#     "idna>=3.13",
+#     "itsdangerous>=2.2.0",
+#     "jinja2>=3.1.6",
+#     "markupsafe>=3.0.3",
+#     "requests>=2.31.0",
+#     "urllib3>=2.6.3",
+#     "werkzeug>=2.3.7",
+#     "alive-progress==3.3.0",
+#     "about-time==4.2.1",
+#     "graphemeu==0.7.2"
+# ]
+# ///
+import requests, os, time, glob, uuid, subprocess, fetch
 from aspose.threed import Scene, FileFormat
 from pathlib import Path
-import subprocess
+from alive_progress import alive_bar
 
 scan_name = uuid.uuid4()
 scanner_ip = '192.168.12.1'
@@ -30,23 +53,26 @@ def download_file(url, local_filename):
         return e
 
 def run_command(command):
-    result = subprocess.run(
-        command, 
-        shell=True, 
-        executable='/bin/zsh',
-        capture_output=True,
-        text=True           
-    )
-    return result
+    return subprocess.run(command, shell=True)
 
 def photogrammetry_path():
     return os.getcwd() + '/operation'
 
-def photogrammetry(imagepath, outputname):
-    command = [os.path.join(os.getcwd(), 'operation'), os.path.join(os.getcwd(), imagepath), os.path.join(os.getcwd(), imagepath, outputname)]
+def photogrammetry(imagepath, outputpath, outputname):
+    command = os.path.join(os.getcwd(), 'operation') + ' ' + imagepath + ' ' + os.path.join(os.getcwd(), outputpath, outputname)
+    print('Starting Photogrammetry Operation')
     run_command(command)
-    scn = Scene.from_file(os.path.join(os.getcwd(), imagepath, outputname + ".usdz"))
-    scn.save(os.path.join(os.getcwd(), imagepath, outputname + ".ply"))
-    scn.save(os.path.join(os.getcwd(), imagepath, outputname + ".glb"))
-    scn.save(os.path.join(os.getcwd(), imagepath, outputname + ".stl"))
-    return[os.path.join(os.getcwd(), imagepath, outputname + ".ply"), os.path.join(os.getcwd(), imagepath, outputname + ".glb"), os.path.join(os.getcwd(), imagepath, outputname + ".stl")]
+
+def scan():
+    fetch.download_all()
+    photogrammetry(os.getcwd(), os.getcwd(), 'output.usdz')
+    run_command('rm processing*.png')
+
+if __name__ == '__main__':
+    print('Ancient Vision Api Shell:')
+    print('v0.1 - Licensed under MIT')
+    while True:
+        try:
+            exec(input('--> '))
+        except Exception as e:
+            print(e)

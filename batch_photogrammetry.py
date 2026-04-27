@@ -25,20 +25,16 @@ from aspose.threed import Scene, FileFormat
 from time import sleep as wait
 
 def run_command(command):
-    result = subprocess.run(
-        command, 
-        shell=True, 
-        executable='/bin/zsh',
-        capture_output=True,
-        text=True           
-    )
-    return result
+    return subprocess.run(command, shell=True)
 
 def photogrammetry_path():
     return os.getcwd() + '/operation'
 
 def photogrammetry(imagepath, outputpath, outputname):
-    command = [os.path.join(os.getcwd(), 'operation'), imagepath, os.path.join(os.getcwd(), outputpath, outputname)]
+    print(type(imagepath), imagepath)
+    print(type(outputpath), outputpath)
+    print(type(outputname), outputname)
+    command = os.path.join(os.getcwd(), 'operation') + ' ' + imagepath + ' ' + os.path.join(os.getcwd(), outputpath, outputname)
     print(command)
     run_command(command)
     try:
