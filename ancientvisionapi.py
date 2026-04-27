@@ -1,6 +1,7 @@
 import requests, os, time, glob, uuid
-import aspose.threed as a3d
+from aspose.threed import Scene, FileFormat
 from pathlib import Path
+import subprocess
 
 scan_name = uuid.uuid4()
 scanner_ip = '192.168.12.1'
@@ -28,39 +29,24 @@ def download_file(url, local_filename):
     except requests.exceptions.RequestException as e:
         return e
 
-def photogrammetryoperation(scanname=uuid.uuid4(), scannerip='192.168.12.1', scan=False):
-    os.chdir(os.path.dirname(__file__))
+def run_command(command):
+    result = subprocess.run(
+        command, 
+        shell=True, 
+        executable='/bin/zsh',
+        capture_output=True,
+        text=True           
+    )
+    return result
 
-    try:
-        os.mkdir('.photogrammetrycache')
-    except FileExistsError:
-        pass
+def photogrammetry_path():
+    return os.getcwd() + '/operation'
 
-    for file in glob.glob('.photogrammetrycache/output*'):
-        os.remove(file)
-
-    if scan == True:
-        for file in glob.glob('.photogrammetrycache/processing*'):
-            os.remove(file)
-
-    file_path = Path(".photogrammetrycache/processor")
-    if file_path.is_file():
-        print("File exists")
-    else:
-        download_file('https://github.com/artifact-alliance/fll/raw/refs/heads/main/install/processor', '.photogrammetrycache/processor')
-    if scan == True:
-        for i in range(160):
-            download_file(f'http://{scanner_ip}:1234/images/captured_img{i}.png', f'.photogrammetrycache/processing{i}.png')
-
-    os.system(f'.photogrammetrycache/processor .photogrammetrycache/ {scan_name}.usdz -d raw')
-
-    for file in glob.glob('.photogrammetrycache/processing*'):
-        os.remove(file)
-
-    scene = a3d.Scene.from_file(f"{scan_name}.usdz")
-    scene.save(f"output{scan_name}.glb")
-    scene.save(f"output{scan_name}.ply")
-    time.sleep(0.1)
-    os.remove(f"{scan_name}.usdz")
-    return [f".photogrammetrycache/output{scan_name}.glb", f".photogrammetrycache/output{scan_name}.ply"]
-
+def photogrammetry(imagepath, outputname):
+    command = [os.path.join(os.getcwd(), 'operation'), os.path.join(os.getcwd(), imagepath), os.path.join(os.getcwd(), imagepath, outputname)]
+    run_command(command)
+    scn = Scene.from_file(os.path.join(os.getcwd(), imagepath, outputname + ".usdz"))
+    scn.save(os.path.join(os.getcwd(), imagepath, outputname + ".ply"))
+    scn.save(os.path.join(os.getcwd(), imagepath, outputname + ".glb"))
+    scn.save(os.path.join(os.getcwd(), imagepath, outputname + ".stl"))
+    return[os.path.join(os.getcwd(), imagepath, outputname + ".ply"), os.path.join(os.getcwd(), imagepath, outputname + ".glb"), os.path.join(os.getcwd(), imagepath, outputname + ".stl")]

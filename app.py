@@ -19,16 +19,13 @@
 #     "werkzeug>=2.3.7",
 # ]
 # ///
-import uuid
-import mysql.connector
+import uuid, mysql.connector, os, subprocess, configparser, runpy, sys
 from flask import Flask, request, jsonify, send_file
-import os
-import subprocess
-import configparser
 from flask_cors import CORS 
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import ancientvisionapi as avapi
+from view import viewhtml
 
 config = configparser.ConfigParser()
 config.read('config.cfg')
@@ -234,14 +231,34 @@ def download_model():
     if not uid:
         return jsonify({'error': 'Missing parameter: uid'}), 400
 
-    base_dir = os.path.join(os.getcwd(), 'colmap',uid, 'dense','0')  
-    ply_path = os.path.join(base_dir, 'fused.ply')
+    base_dir = os.path.join(os.getcwd(), 'colmap',uid)  
+    ply_path = os.path.join(base_dir, 'sparse.ply')
+    #ply_path = os.path.join(base_dir, 'sparse.glb')
 
     if not os.path.isfile(ply_path):
-        return jsonify({'error': f'PLY file not found for uid: {uid}'}), 404
+        return jsonify({'error': f'PLY file not found at path {ply_path} for uid: {uid}'}), 404
+
 
     return send_file(ply_path, mimetype='application/x-ply', as_attachment=True, download_name='fused.ply')
 
+@app.route('/<uuid>/<filename>', methods=['GET'])
+def download_uuid_model(uuid, filename):
+    path = os.path.join(os.getcwd(), 'colmap', str(uuid), filename)
+    return send_file(path, as_attachment=True)
+
+@app.route('/view/<uuid>', methods=['GET'])
+def view_uuid_model(uuid):
+    return viewhtml(uuid)
+
+@app.route('/')
+def index():
+    root = os.path.dirname(__file__)
+    file_path = os.path.join(root, 'index.html')
+    with open(file_path, 'r', encoding='utf-8') as file:
+        return file.read()
+ 
+
 if __name__ == '__main__':
     #app.run(debug=True)
+    process = subprocess.Popen([sys.executable, "batch_photogrammetry.py"])
     app.run(host="0.0.0.0", port=5888,debug=True)
