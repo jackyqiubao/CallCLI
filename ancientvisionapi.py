@@ -24,7 +24,6 @@
 import requests, os, time, glob, uuid, subprocess, fetch
 from aspose.threed import Scene, FileFormat
 from pathlib import Path
-from alive_progress import alive_bar
 
 scan_name = uuid.uuid4()
 scanner_ip = '192.168.12.1'
@@ -83,6 +82,6 @@ if __name__ == '__main__':
     print('v0.1 - Licensed under MIT')
     while True:
         try:
-            exec(input('--> '))
+            exec(input('$ ancientvision -> '))
         except Exception as e:
             print(e)

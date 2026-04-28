@@ -24,7 +24,6 @@ from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS 
 from datetime import datetime
 from werkzeug.utils import secure_filename
-import ancientvisionapi as avapi
 from view import viewhtml
 
 config = configparser.ConfigParser()
