@@ -46,6 +46,27 @@ def download_all(count=80, scanner_ip='192.168.29.193'):
             download_file(f'http://{scanner_ip}:1234/images/captured_img{i}.png', f'processing{i}.png')
             bar()
 
+def start_scan(scanner_ip='192.168.29.193', count=80):
+    try:
+        get((f'http://{scanner_ip}:1234/scancustom/1/{count}'), timeout=1)
+    except Exception as e:
+        pass
+    print('Starting Scan')
+    count = 156
+    with alive_bar(count) as bar:
+        for i in range(count):
+            time.sleep(1)
+            bar()
+    return
+
+def stop_scan(scanner_ip='192.168.29.193'):
+    try:
+        get((f'http://{scanner_ip}:1234/stop/'), timeout=1)
+    except Exception as e:
+        pass
+
+
+
 
 if __name__ == '__main__':
     download_all()

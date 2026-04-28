@@ -63,10 +63,20 @@ def photogrammetry(imagepath, outputpath, outputname):
     print('Starting Photogrammetry Operation')
     run_command(command)
 
-def scan():
-    fetch.download_all()
-    photogrammetry(os.getcwd(), os.getcwd(), 'output.usdz')
+def scan(count=80, scanner_ip='192.168.29.193'):
+    fetch.start_scan(scanner_ip=scanner_ip, count=count)
+    fetch.download_all(scanner_ip=scanner_ip, count=count)
+    photogrammetry(os.getcwd(), os.getcwd(), f'scan{uuid.uuid4()}.usdz')
     run_command('rm processing*.png')
+    fetch.stop_scan(scanner_ip=scanner_ip)
+    return('Scan Success!')
+
+def process(count=80, scanner_ip='192.168.29.193'):
+    fetch.download_all(scanner_ip=scanner_ip, count=count)
+    photogrammetry(os.getcwd(), os.getcwd(), f'scan{uuid.uuid4()}.usdz')
+    run_command('rm processing*.png')
+    fetch.stop_scan(scanner_ip=scanner_ip)
+    return('Scan Success!')
 
 if __name__ == '__main__':
     print('Ancient Vision Api Shell:')
