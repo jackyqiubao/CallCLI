@@ -57,31 +57,38 @@ def run_command(command):
 def photogrammetry_path():
     return os.getcwd() + '/operation'
 
-def photogrammetry(imagepath, outputpath, outputname):
-    command = os.path.join(os.getcwd(), 'operation') + ' ' + imagepath + ' ' + os.path.join(os.getcwd(), outputpath, outputname)
+def photogrammetry(imagepath, outputpath, outputname, detail):
+    command = os.path.join(os.getcwd(), 'operation') + ' ' + imagepath + ' ' + os.path.join(os.getcwd(), outputpath, outputname + ' -d ' + detail)
     print('Starting Photogrammetry Operation')
     run_command(command)
 
-def scan(count=80, scanner_ip='192.168.29.193'):
+def scan(count=80, scanner_ip='192.168.29.193', detail='reduced'):
+    fetch.stop_scan(scanner_ip=scanner_ip)
     fetch.start_scan(scanner_ip=scanner_ip, count=count)
     fetch.download_all(scanner_ip=scanner_ip, count=count)
-    photogrammetry(os.getcwd(), os.getcwd(), f'scan{uuid.uuid4()}.usdz')
+    photogrammetry(os.getcwd(), os.getcwd(), f'scan{uuid.uuid4()}.usdz', detail)
     run_command('rm processing*.png')
     fetch.stop_scan(scanner_ip=scanner_ip)
     return('Scan Success!')
 
-def process(count=80, scanner_ip='192.168.29.193'):
+def process(count=80, scanner_ip='192.168.29.193', detail='reduced'):
     fetch.download_all(scanner_ip=scanner_ip, count=count)
-    photogrammetry(os.getcwd(), os.getcwd(), f'scan{uuid.uuid4()}.usdz')
+    photogrammetry(os.getcwd(), os.getcwd(), f'scan{uuid.uuid4()}.usdz', detail)
     run_command('rm processing*.png')
     fetch.stop_scan(scanner_ip=scanner_ip)
     return('Scan Success!')
+
+def ping(scanner_ip='192.168.29.193'):
+    fetch.get(f"http://{scanner_ip}:1234/", timeout=10)
+
+def clear():
+    run_command('clear')
 
 if __name__ == '__main__':
     print('Ancient Vision Api Shell:')
     print('v0.1 - Licensed under MIT')
     while True:
         try:
-            exec(input('$ ancientvision -> '))
+            exec(input('$ ancientvisionapi -> '))
         except Exception as e:
             print(e)

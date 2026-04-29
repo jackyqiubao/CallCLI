@@ -65,8 +65,5 @@ def stop_scan(scanner_ip='192.168.29.193'):
     except Exception as e:
         pass
 
-
-
-
 if __name__ == '__main__':
     download_all()

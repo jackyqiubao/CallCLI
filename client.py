@@ -44,5 +44,5 @@ for idx, filename in enumerate(file_list):
         files = {'image': f}
         completed = 'true' if idx == num_files - 1 else 'false'
         data = {'folder_name': folder_name, 'completed': completed}
-        response = requests.post('http://localhost:5000/upload', files=files, data=data)
+        response = requests.post('http://localhost:5888/upload', files=files, data=data)
     print(f"Sent {filename}, completed={completed}, response: {response.json()}")
