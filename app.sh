@@ -1,0 +1,1 @@
+uv run "C:\Users\Ethan Li\Desktop\CallCLI\app.py"

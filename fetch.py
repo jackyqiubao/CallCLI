@@ -1,6 +1,17 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "aspose-3d",
+#     "requests>=2.31.0",
+#     "alive-progress==3.3.0",
+#     "about-time==4.2.1",
+#     "graphemeu==0.7.2"
+# ]
+# ///
 import requests, os, time, glob, uuid           
 import aspose.threed as a3d
 from pathlib import Path
+from alive_progress import alive_bar
 
 scan_name= uuid.uuid4()
 scanner_ip = '192.168.29.193'
@@ -28,7 +39,31 @@ def download_file(url, local_filename):
     except requests.exceptions.RequestException as e:
         return e
 
+def download_all(count=80, scanner_ip='192.168.29.193'):
+    print('Downloading Images:')
+    with alive_bar(count) as bar:
+        for i in range(count):
+            download_file(f'http://{scanner_ip}:1234/images/captured_img{i}.png', f'processing{i}.png')
+            bar()
 
-for i in range(80):
-    download_file(f'http://{scanner_ip}:1234/images/captured_img{i}.png', f'processing{i}.png')
-    print('Downloaded image', i)
+def start_scan(scanner_ip='192.168.29.193', count=80):
+    try:
+        get((f'http://{scanner_ip}:1234/scancustom/1/{count}'), timeout=1)
+    except Exception as e:
+        pass
+    print('Starting Scan')
+    count = 156
+    with alive_bar(count) as bar:
+        for i in range(count):
+            time.sleep(1)
+            bar()
+    return
+
+def stop_scan(scanner_ip='192.168.29.193'):
+    try:
+        get((f'http://{scanner_ip}:1234/stop/'), timeout=1)
+    except Exception as e:
+        pass
+
+if __name__ == '__main__':
+    download_all()

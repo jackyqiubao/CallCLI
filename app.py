@@ -24,7 +24,6 @@ from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS 
 from datetime import datetime
 from werkzeug.utils import secure_filename
-import ancientvisionapi as avapi
 from view import viewhtml
 
 config = configparser.ConfigParser()
@@ -256,15 +255,11 @@ def index():
     file_path = os.path.join(root, 'index.html')
     with open(file_path, 'r', encoding='utf-8') as file:
         return file.read()
-
-@app.route('/insert/<uuid>/<url>/<filename>')
-def download_model_to_artifactuuid(uuid, url, filename):
-    filepath = os.path.join(os.getcwd(), 'colmap', uuid, filename)
-    try:
-        avapi.download_file(url, filepath)
-        return jsonify({'message': f'File downloaded successfully to {filepath}'})
-    except Exception as e:
-        return jsonify({'error': f'Failed to download file: {str(e)}'}), 500
+    
+@app.route('/<filename>')
+def indexfile(filename):
+    return send_file(os.path.join(os.getcwd(), filename))
+ 
 
 if __name__ == '__main__':
     #app.run(debug=True)
